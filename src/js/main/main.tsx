@@ -65,7 +65,7 @@ const Main = () => {
                 <UtActionButton group="action" action="apply_expression" current={setHovered}>
                   <Code />
                 </UtActionButton>
-                <UtActionButton group="action" action="create_camera_controller" current={setHovered}>
+                <UtActionButton group="action" action="create_camera_controller" current={setHovered} onPress={() => work(evalTS("createCameraController"))}>
                   <Camera />
                 </UtActionButton>
                 <UtActionButton group="action" action="separate_dimensions" current={setHovered} onPress={() => work(evalTS("separateDimensions"))}>
@@ -128,7 +128,7 @@ type UtDialogButton = {
 
 const UtDialogButton = (props: UtDialogButton) => {
   return (
-    <DialogTrigger type="tray">
+    <DialogTrigger type="tray" isDismissable>
       <UtActionButton {...props} />
       {(close) => (
         <Dialog>
