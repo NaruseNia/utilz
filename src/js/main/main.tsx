@@ -9,6 +9,7 @@ import Code from "@spectrum-icons/workflow/Code";
 import ImageMapRectangle from "@spectrum-icons/workflow/ImageMapRectangle";
 import JumpToTop from "@spectrum-icons/workflow/JumpToTop";
 import Multiple from "@spectrum-icons/workflow/Multiple";
+import { evalTS } from "../lib/utils/bolt";
 
 const Main = () => {
   const [hovered, setHovered] = useState("");
@@ -52,7 +53,7 @@ const Main = () => {
                 <UtActionButton group="action" action="create_camera_controller" current={setHovered}>
                   <Camera />
                 </UtActionButton>
-                <UtActionButton group="action" action="separate_dimensions" current={setHovered}>
+                <UtActionButton group="action" action="separate_dimensions" current={setHovered} onPress={() => evalTS("separateDimensions")}>
                   <Multiple />
                 </UtActionButton>
               </Grid>
