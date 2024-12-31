@@ -32,7 +32,7 @@ export default class Vulcan {
   launchAppEx(
     productSAPCodeSpecifier: string,
     focus: boolean,
-    cmdLine?: string,
+    cmdLine?: string
   ): boolean;
 
   /**

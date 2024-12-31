@@ -69,7 +69,7 @@ type ReturnType<F extends Function> = F extends (...args: infer A) => infer B
 
 export const evalTS = <
   Key extends string & keyof Scripts,
-  Func extends Function & Scripts[Key]
+  Func extends Function & Scripts[Key],
 >(
   functionName: Key,
   ...args: ArgTypes<Func>
