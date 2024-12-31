@@ -15,6 +15,7 @@
   "dependencies": {
     "@adobe/react-spectrum": "^3.38.1",
     "@spectrum-icons/workflow": "^4.2.16",
+    "framer-motion": "^11.15.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
