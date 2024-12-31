@@ -1,4 +1,4 @@
-import { ActionButton, Divider, Flex, Footer, Grid, ProgressBar, repeat, SpectrumActionButtonProps, Text, Tooltip, TooltipTrigger } from "@adobe/react-spectrum";
+import { ActionButton, Content, Dialog, DialogTrigger, Divider, Flex, Footer, Grid, Heading, ProgressBar, repeat, SpectrumActionButtonProps, Text, Tooltip, TooltipTrigger } from "@adobe/react-spectrum";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useAnimate } from "framer-motion";
 import { mainToolTips } from "../lib/constant";
@@ -11,6 +11,7 @@ import JumpToTop from "@spectrum-icons/workflow/JumpToTop";
 import Multiple from "@spectrum-icons/workflow/Multiple";
 import { evalTS } from "../lib/utils/bolt";
 import { Scripts } from "../lib/cep/es-types";
+import { BoundIt } from "../app/boundit";
 
 const Main = () => {
   const [hovered, setHovered] = useState("");
@@ -46,9 +47,9 @@ const Main = () => {
             <div>
               <Text>Apps</Text>
               <Grid columns={repeat("auto-fit", "size-400")} gap="size-100">
-                <UtActionButton group="app" action="bound_it" current={setHovered}>
+                <UtDialogButton group="app" action="bound_it" current={setHovered} dialogContent={<BoundIt />}>
                   <ImageMapRectangle />
-                </UtActionButton>
+                </UtDialogButton>
                 <UtActionButton group="app" action="expression_editor" current={setHovered}>
                   <Code />
                 </UtActionButton>
@@ -118,6 +119,26 @@ const UtActionButton = (props: React.PropsWithChildren<UtActionButtonProps>) => 
         <Tooltip>{mainToolTips[props.action]?.title}</Tooltip>
       </TooltipTrigger>
     </div>
+  )
+}
+
+type UtDialogButton = {
+  dialogContent: React.ReactNode;
+} & UtActionButtonProps;
+
+const UtDialogButton = (props: UtDialogButton) => {
+  return (
+    <DialogTrigger type="tray">
+      <UtActionButton {...props} />
+      {(close) => (
+        <Dialog>
+          <Heading>{mainToolTips[props.action].title}</Heading>
+          <Content>
+            {props.dialogContent}
+          </Content>
+        </Dialog>
+      )}
+    </DialogTrigger>
   )
 }
 
