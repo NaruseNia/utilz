@@ -1,4 +1,4 @@
-import { ActionButton, Divider, Flex, Footer, Grid, repeat, SpectrumActionButtonProps, Text, Tooltip, TooltipTrigger } from "@adobe/react-spectrum";
+import { ActionButton, Divider, Flex, Footer, Grid, ProgressBar, repeat, SpectrumActionButtonProps, Text, Tooltip, TooltipTrigger } from "@adobe/react-spectrum";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useAnimate } from "framer-motion";
 import { mainToolTips } from "../lib/constant";
@@ -10,23 +10,37 @@ import ImageMapRectangle from "@spectrum-icons/workflow/ImageMapRectangle";
 import JumpToTop from "@spectrum-icons/workflow/JumpToTop";
 import Multiple from "@spectrum-icons/workflow/Multiple";
 import { evalTS } from "../lib/utils/bolt";
+import { Scripts } from "../lib/cep/es-types";
 
 const Main = () => {
   const [hovered, setHovered] = useState("");
   const [scope, animate] = useAnimate();
+  const [working, IsWorking] = useState(false);
 
   const getTooltip = (action: string) => {
     return mainToolTips[action] ? mainToolTips[action] : { title: "", description: "" };
   }
 
   useEffect(() => {
-    animate("span", { opacity: hovered ? 1 : 0 });
+    animate(".tp", { opacity: working ? 1 : 0 });
+  }, [working]);
+
+  useEffect(() => {
+    animate(".tt", { opacity: hovered ? 1 : 0 });
   }, [hovered]);
+
+  const work = (action: Promise<ReturnType<any>>, func?: () => {}) => {
+    IsWorking(true);
+    action.then(() => {
+      if (func) func();
+      IsWorking(false);
+    });
+  };
 
   return (
     <div className="w-screen h-screen">
       <UtHeader />
-      <div className="h-screen p-4">
+      <div className="h-screen p-4" ref={scope}>
         <div className="flex flex-col h-full gap-4">
           <div className="flex flex-col flex-grow-0 h-full gap-2">
             <div>
@@ -53,18 +67,21 @@ const Main = () => {
                 <UtActionButton group="action" action="create_camera_controller" current={setHovered}>
                   <Camera />
                 </UtActionButton>
-                <UtActionButton group="action" action="separate_dimensions" current={setHovered} onPress={() => evalTS("separateDimensions")}>
+                <UtActionButton group="action" action="separate_dimensions" current={setHovered} onPress={() => work(evalTS("separateDimensions"))}>
                   <Multiple />
                 </UtActionButton>
               </Grid>
             </div>
           </div>
           <Footer>
-            <div ref={scope}>
+            <div>
               <Flex direction="column" gap="size-0">
-                <span className="text-lg">{getTooltip(hovered).title}</span>
-                <span className="text-gray-400">{getTooltip(hovered).description}</span>
+                <span className="text-lg tt">{getTooltip(hovered).title}</span>
+                <span className="text-gray-400 tt">{getTooltip(hovered).description}</span>
               </Flex>
+              <div className="flex items-center justify-center mt-2 tp">
+                <ProgressBar size="S" isIndeterminate width="calc(100% - 0px)" />
+              </div>
             </div>
           </Footer>
         </div>
