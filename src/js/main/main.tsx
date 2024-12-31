@@ -25,38 +25,40 @@ const Main = () => {
   return (
     <div className="w-screen h-screen">
       <UtHeader />
-      <div className="p-4">
-        <Flex direction="column" gap="size-100">
-          <div>
-            <Text>Apps</Text>
-            <Grid columns={repeat("auto-fit", "size-400")} gap="size-100">
-              <UtActionButton group="app" action="bound_it" current={setHovered}>
-                <ImageMapRectangle />
-              </UtActionButton>
-              <UtActionButton group="app" action="expression_editor" current={setHovered}>
-                <Code />
-              </UtActionButton>
-            </Grid>
+      <div className="h-screen p-4">
+        <div className="flex flex-col h-full gap-4">
+          <div className="flex flex-col flex-grow-0 h-full gap-2">
+            <div>
+              <Text>Apps</Text>
+              <Grid columns={repeat("auto-fit", "size-400")} gap="size-100">
+                <UtActionButton group="app" action="bound_it" current={setHovered}>
+                  <ImageMapRectangle />
+                </UtActionButton>
+                <UtActionButton group="app" action="expression_editor" current={setHovered}>
+                  <Code />
+                </UtActionButton>
+              </Grid>
+            </div>
+            <Divider size="S" />
+            <div>
+              <Text>Actions</Text>
+              <Grid columns={repeat("auto-fit", "size-400")} gap="size-100">
+                <UtActionButton group="action" action="link_above" current={setHovered}>
+                  <JumpToTop />
+                </UtActionButton>
+                <UtActionButton group="action" action="apply_expression" current={setHovered}>
+                  <Code />
+                </UtActionButton>
+                <UtActionButton group="action" action="create_camera_controller" current={setHovered}>
+                  <Camera />
+                </UtActionButton>
+                <UtActionButton group="action" action="separate_dimensions" current={setHovered}>
+                  <Multiple />
+                </UtActionButton>
+              </Grid>
+            </div>
           </div>
-          <Divider size="S" />
-          <div>
-            <Text>Actions</Text>
-            <Grid columns={repeat("auto-fit", "size-400")} gap="size-100">
-              <UtActionButton group="action" action="link_above" current={setHovered}>
-                <JumpToTop />
-              </UtActionButton>
-              <UtActionButton group="action" action="apply_expression" current={setHovered}>
-                <Code />
-              </UtActionButton>
-              <UtActionButton group="action" action="create_camera_controller" current={setHovered}>
-                <Camera />
-              </UtActionButton>
-              <UtActionButton group="action" action="separate_dimensions" current={setHovered}>
-                <Multiple />
-              </UtActionButton>
-            </Grid>
-          </div>
-          <Footer flexGrow={0}>
+          <Footer>
             <div ref={scope}>
               <Flex direction="column" gap="size-0">
                 <span className="text-lg">{getTooltip(hovered).title}</span>
@@ -64,7 +66,7 @@ const Main = () => {
               </Flex>
             </div>
           </Footer>
-        </Flex>
+        </div>
       </div>
     </div>
   );
